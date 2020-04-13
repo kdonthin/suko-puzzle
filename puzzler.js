@@ -173,7 +173,7 @@ function updateTimer()
 function secondsToTimeString(timePastSec)
 {
     let hours = Math.floor(timePastSec/3600) ;
-    let minutes = Math.floor((timePastSec-hours*60)/60) ;
+    let minutes = Math.floor((timePastSec%3600)/60) ;
     let seconds = Math.floor(timePastSec%60) ;
 
     if ( hours )
