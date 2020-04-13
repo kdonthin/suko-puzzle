@@ -333,14 +333,17 @@ function updateBoard()
 
 function markTotalFields()
 {
-    markGridTotalField(0,0) ;
-    markGridTotalField(0,1) ;
-    markGridTotalField(1,0) ;
-    markGridTotalField(1,1) ;
+    let result = markGridTotalField(0,0) ;
+    
+    result = markGridTotalField(0,1) && result ;
+    result = markGridTotalField(1,0) && result ;
+    result = markGridTotalField(1,1) && result ;
 
-    markColorTotalField(1) ;
-    markColorTotalField(2) ;
-    markColorTotalField(3) ;
+    result = markColorTotalField(1) && result ;
+    result = markColorTotalField(2) && result ;
+    result = markColorTotalField(3) ;
+
+    return result ;
 }
 
 function markGridTotalField(row, col)
@@ -352,6 +355,8 @@ function markGridTotalField(row, col)
         if ( sumBoard[row][col].text() == userTotal )
         {
             sumBoard[row][col].removeClass("incorrect").addClass("correct") ;
+
+            return true ;
         }
         else
         {
@@ -362,6 +367,8 @@ function markGridTotalField(row, col)
     {
         sumBoard[row][col].removeClass("correct").removeClass("incorrect") ;
     }
+
+    return false ;
 }
 
 function markColorTotalField(color)
@@ -396,6 +403,8 @@ function markColorTotalField(color)
         if ( board[3][color-1].text() == userTotal)
         {
             board[3][color-1].removeClass("incorrect").addClass("correct") ;
+
+            return true ;
         }
         else
         {
@@ -406,6 +415,8 @@ function markColorTotalField(color)
     {
         board[3][color-1].removeClass("correct").removeClass("incorrect") ;
     }
+
+    return false ;
 }
 
 function showAnswer(show)
@@ -459,6 +470,12 @@ function checkAnswer(autoCheck)
             alert(`Congratulations, you completed puzzle in [${secondsToTimeString(timePastSec)}] !!!!`) ;
             logToPage(`Checking - Congratulations, you completed puzzle in [${secondsToTimeString(timePastSec)}]`) ;
             isPuzzleCorrect = true ;
+        }
+        else if (markTotalFields())
+        {
+            alert(`Congratulations, You found alternative Solution in [${secondsToTimeString(timePastSec)}] !!!!`) ;
+            logToPage(`Checking - Congratulations. You have found alternative solution in [${secondsToTimeString(timePastSec)}] !!!!.`) ;
+            isCorrect = true ;
         }
         else if (!autoCheck) // log & alert only if not auto check
         {
