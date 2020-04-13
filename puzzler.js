@@ -64,6 +64,7 @@ var lockApp = false ; // lockApp when showing answer.
 var timerId ;
 var timerStartTime ;
 var timePastSec ;
+var isPuzzleCorrect ;
 
 const GAME_INTRO = "\nINSTRUCTIONS:\nPlace the numbers 1-9 in the spaces so that the number in each circle is equal to the sum of the four surrounding spaces and each color total is correct.\nClick on tile to select and click on box(Board) to place it.\nInspired by WSJ Suko Number Puzzle." ;
 
@@ -160,6 +161,7 @@ function setBoard()
 
     timerId = setInterval(updateTimer, 1000) ;
     timerStartTime = new Date() ;
+    isPuzzleCorrect = false ;
 }
 
 function updateTimer()
@@ -324,8 +326,9 @@ function updateTiles()
 
 function updateBoard()
 {
-    showAnswer(false) ;
-    markTotalFields() ;
+    showAnswer(false) ; // show user answers on board
+    markTotalFields() ; // mark total fields with correct/incorrect colors.
+    checkAnswer(true) ; // check automatically
 }
 
 function markTotalFields()
@@ -416,7 +419,7 @@ function showAnswer(show)
     }
 }
 
-function checkAnswer()
+function checkAnswer(autoCheck)
 {
     let isComplete = true ;
     let isCorrect = true ;
@@ -449,25 +452,26 @@ function checkAnswer()
                 }
             }
         }
+
+        if ( isCorrect )
+        {
+            clearInterval(timerId) ;
+            alert(`Congratulations, you completed puzzle in [${secondsToTimeString(timePastSec)}] !!!!`) ;
+            logToPage(`Checking - Congratulations, you completed puzzle in [${secondsToTimeString(timePastSec)}]`) ;
+            isPuzzleCorrect = true ;
+        }
+        else if (!autoCheck) // log & alert only if not auto check
+        {
+            alert(`Incorrect. You have ${wrongAnswers} wrong answers.`) ;
+            logToPage(`Checking - Incorrect. You have ${wrongAnswers} wrong answers.`) ;
+        }
     }
-    else
+    else if (!autoCheck) // log only if not auto check
     {
         // alert("Please fill all boxes...") ;
         logToPage("Checking - Incomplete, fill all boxes.") ;
 
         return ;
-    }
-
-    if ( isCorrect )
-    {
-        clearInterval(timerId) ;
-        alert(`Congratulations, you completed puzzle in [${secondsToTimeString(timePastSec)}] !!!!`) ;
-        logToPage(`Checking - Congratulations, you completed puzzle in [${secondsToTimeString(timePastSec)}]`) ;
-    }
-    else
-    {
-        alert(`Incorrect. You have ${wrongAnswers} wrong answers.`) ;
-        logToPage(`Checking - Incorrect. You have ${wrongAnswers} wrong answers.`) ;
     }
 }
 
@@ -533,7 +537,7 @@ function resetBoard()
 
 function newPuzzle(ask)
 {
-    if (ask && !confirm("Aer you sure you want to discard current puzzle?"))
+    if (!isPuzzleCorrect && ask && !confirm("Aer you sure you want to discard current puzzle?"))
     {
         return ;
     }
