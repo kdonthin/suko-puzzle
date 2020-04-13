@@ -1,0 +1,94 @@
+<html >
+    <head>
+        <title>Suko Puzzle</title>
+        <link rel="stylesheet" href="puzzler.css">
+        <script lang="javascript" src="/js/jquery-3.5.0.js"></script>
+        <script lang="javascript" src="puzzler.js"></script>
+        <script lang="javascript">
+            $(document).ready( function() {
+                $("#answer").click(function() { 
+                    toggleAnswer() ;
+                }) ;
+
+                $("#checkAnswer").click(function() {
+                    checkAnswer() ;
+                })
+
+                $("#reset").click(function() {
+                    resetBoard() ;
+                })
+
+                $("#newPuzzle").click(function() {
+                    newPuzzle(true) ;
+                })
+
+                newPuzzle(false) ;
+            } ) ;
+        </script>
+    </head>
+    <body>
+        <table>
+            <thead class="heading">
+                <th class="boardTitle">Board</th>
+                <th class="tilesTitle">Tiles</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div id="board" class="wrapper">
+                            <div id="A1" class="box"></div>
+                            <div id="A2" class="box"></div>
+                            <div id="A3" class="box"></div>
+                            <div id="B1" class="box"></div>
+                            <div id="B2" class="box"></div>
+                            <div id="B3" class="box"></div>
+                            <div id="C1" class="box"></div>
+                            <div id="C2" class="box"></div>
+                            <div id="C3" class="box"></div>
+                            <div id="D1" class="circle"></div>
+                            <div id="D2" class="circle"></div>
+                            <div id="D3" class="circle"></div>
+                        </div>            
+                    </td>
+                    <td style="padding: 100px;">
+                        <div id="tiles" class="tilesWrapper">
+                            <div id="TA1" class="tile"></div>
+                            <div id="TA2" class="tile"></div>
+                            <div id="TA3" class="tile"></div>
+                            <div id="TB1" class="tile"></div>
+                            <div id="TB2" class="tile"></div>
+                            <div id="TB3" class="tile"></div>
+                            <div id="TC1" class="tile"></div>
+                            <div id="TC2" class="tile"></div>
+                            <div id="TC3" class="tile"></div>
+                        </div>            
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:20px 50px">
+                        <div id="sum" class="sumWrapper">
+                            <div id="SA1" class="circle sa1">1</div>
+                            <div id="SA2" class="circle sa2">1</div>
+                            <div id="SB1" class="circle sb1">1</div>
+                            <div id="SB2" class="circle sb2">1</div>
+                        </div>            
+                    </td>
+                    <td style="padding: 0px 100px">
+                        <div id="submit" class="submit">
+                        <input type="button" id="timer" value="00:00:00" class="button timer" />
+                        <br /><br />
+                        <input type="button" id="answer" value="Show Answer" class="button check" />
+                        <br /><br />
+                        <input type="button" id="checkAnswer" value="Check Answer" class="button check" />
+                        <br /><br />
+                        <input type="button" id="reset" value="Reset Board" class="button reset" />
+                        <br /><br />
+                        <input type="button" id="newPuzzle" value="New Puzzle" class="button new" />
+                    </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <textarea id="log" readonly="true" cols="60" rows="20"></textarea>
+    </body>
+</html>
