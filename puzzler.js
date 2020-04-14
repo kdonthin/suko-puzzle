@@ -429,7 +429,7 @@ function markTotalFields()
 
     result = markColorTotalField(1) && result ;
     result = markColorTotalField(2) && result ;
-    result = markColorTotalField(3) ;
+    result = markColorTotalField(3) && result ;
 
     return result ;
 }
