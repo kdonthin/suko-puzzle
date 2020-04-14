@@ -49,6 +49,9 @@ class Tile
     }
 }
 
+const ADD = "←" ;
+const REMOVE = "→" ;
+
 class Step
 {
     constructor(action, digit, row, column)
@@ -59,12 +62,9 @@ class Step
         this.column = column ;
     }
 
-    static ADD = "←" ;
-    static REMOVE = "→" ;
-
     toString()
     {
-        if (this.action == Step.ADD)
+        if (this.action == ADD)
         {
             return `[${this.row},${this.column}] ${this.action} ${this.digit}` ;
         }
@@ -318,7 +318,7 @@ function boardClicked(row, col)
     {
         if (userAnswers[row][col] != 0)
         {
-            steps.push(new Step(Step.REMOVE, userAnswers[row][col], row, col )) ;
+            steps.push(new Step(REMOVE, userAnswers[row][col], row, col )) ;
             tiles[userAnswers[row][col]-1].enabled = true ;
             tiles[userAnswers[row][col]-1].selected = true ;
             userAnswers[row][col] = 0 ;
@@ -337,13 +337,13 @@ function boardClicked(row, col)
         {
             tiles[userAnswers[row][col]-1].enabled = true ;
             tiles[userAnswers[row][col]-1].selected = true ;
-            steps.push(new Step(Step.REMOVE, userAnswers[row][col], row, col )) ;
+            steps.push(new Step(REMOVE, userAnswers[row][col], row, col )) ;
         }
 
         userAnswers[row][col] = tiles[selectedTileIndex].value ;
         tiles[selectedTileIndex].selected = false ;
         tiles[selectedTileIndex].enabled = false ;
-        steps.push(new Step(Step.ADD, userAnswers[row][col], row, col )) ;
+        steps.push(new Step(ADD, userAnswers[row][col], row, col )) ;
 
         updateBoard() ;
         updateTiles() ;
@@ -709,14 +709,14 @@ function undoStep()
 
 //    console.log(step.toString()) ;
 
-    if ( step.action == Step.ADD)
+    if ( step.action == ADD)
     {
         clearTileSelection() ;
         userAnswers[step.row][step.column] = 0 ;
         tiles[step.digit-1].enabled = true ;
         tiles[step.digit-1].selected = true ;
     }
-    else if ( step.action == Step.REMOVE)
+    else if ( step.action == REMOVE)
     {
         userAnswers[step.row][step.column] = step.digit ;
         tiles[step.digit-1].enabled = false ;
