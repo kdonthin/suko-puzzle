@@ -49,6 +49,79 @@ class Tile
     }
 }
 
+class Step
+{
+    constructor(action, digit, row, column)
+    {
+        this.action = action ;
+        this.digit = digit ;
+        this.row = row ;
+        this.column = column ;
+    }
+
+    static ADD = "←" ;
+    static REMOVE = "→" ;
+
+    toString()
+    {
+        if (this.action == Step.ADD)
+        {
+            return `[${this.row},${this.column}] ${this.action} ${this.digit}` ;
+        }
+        else
+        {
+            return `[${this.row},${this.column}] ${this.action} ${this.digit}` ;
+        }
+    }
+}
+
+class Steps
+{
+    constructor()
+    {
+        this.steps = [] ;
+    }
+
+    push(step)
+    {
+        this.steps.push(step) ;
+    }
+
+    pop()
+    {
+        if (this.steps.length > 0)
+        {
+            return this.steps.pop() ;
+        }
+        else
+        {
+            return "" ;
+        }
+    }
+
+    clear()
+    {
+        this.steps = [] ;
+    }
+
+    count()
+    {
+        return this.steps.length ;
+    }
+
+    toString()
+    {
+        let result = "" ;
+
+        for (let i = 0 ; i < this.steps.length ; ++i)
+        {
+            result += `${i+1}. ${this.steps[i].toString()}\n` ;
+        }
+
+        return result ;
+    }
+}
+
 var tiles ;
 
 var solution = [[],[],[]] ;
@@ -57,6 +130,7 @@ var userAnswers = [[0,0,0],[0,0,0],[0,0,0]] ;
 var board = [[],[],[],[]] ;
 var sumBoard = [[],[]] ;
 var boardColors ; // Randomize board colors
+var steps = new Steps() ;
 
 var TILES = $("#tiles > div") ;
 var BOARD = $("#board > .box") ;
@@ -162,6 +236,8 @@ function setBoard()
     timerId = setInterval(updateTimer, 1000) ;
     timerStartTime = new Date() ;
     isPuzzleCorrect = false ;
+    
+    steps.clear() ;
 }
 
 function updateTimer()
@@ -203,6 +279,14 @@ function initializeTiles()
     }
 }
 
+function clearTileSelection()
+{
+    for( let i = 0; i < 9 ; ++i)
+    {
+        tiles[i].selected = false ;
+    }
+}
+
 function calculateSumForColor(color)
 {
     let total = 0 ;
@@ -234,6 +318,7 @@ function boardClicked(row, col)
     {
         if (userAnswers[row][col] != 0)
         {
+            steps.push(new Step(Step.REMOVE, userAnswers[row][col], row, col )) ;
             tiles[userAnswers[row][col]-1].enabled = true ;
             tiles[userAnswers[row][col]-1].selected = true ;
             userAnswers[row][col] = 0 ;
@@ -252,11 +337,13 @@ function boardClicked(row, col)
         {
             tiles[userAnswers[row][col]-1].enabled = true ;
             tiles[userAnswers[row][col]-1].selected = true ;
+            steps.push(new Step(Step.REMOVE, userAnswers[row][col], row, col )) ;
         }
 
         userAnswers[row][col] = tiles[selectedTileIndex].value ;
         tiles[selectedTileIndex].selected = false ;
         tiles[selectedTileIndex].enabled = false ;
+        steps.push(new Step(Step.ADD, userAnswers[row][col], row, col )) ;
 
         updateBoard() ;
         updateTiles() ;
@@ -326,6 +413,7 @@ function updateTiles()
 
 function updateBoard()
 {
+    showSteps() ;
     showAnswer(false) ; // show user answers on board
     markTotalFields() ; // mark total fields with correct/incorrect colors.
     checkAnswer(true) ; // check automatically
@@ -546,6 +634,7 @@ function resetBoard()
 
     userAnswers = [[0,0,0],[0,0,0],[0,0,0]] ;
     initializeTiles() ;
+    steps.clear() ;
     updateBoard() ;
     updateTiles() ;
 
@@ -594,4 +683,47 @@ function logToPage(message)
     let currentMessages = $("#log").text() ;
 
     $("#log").text(`${dateString} - ${message}\n${currentMessages}`) ;
+}
+
+function showSteps()
+{
+    $("#steps").text(steps.toString()) ;
+}
+
+function undoStep()
+{
+    if ( lockApp )
+    {
+        alert("Board is locked while showing answer!!!") ;
+        logToPage(`Board is locked while showing answer!!!`) ;
+
+        return true ;
+    }
+
+    if ( steps.count() <= 0 )
+    {
+        logToPage("No steps left to undo...") ;       
+    }
+
+    step = steps.pop() ;
+
+//    console.log(step.toString()) ;
+
+    if ( step.action == Step.ADD)
+    {
+        clearTileSelection() ;
+        userAnswers[step.row][step.column] = 0 ;
+        tiles[step.digit-1].enabled = true ;
+        tiles[step.digit-1].selected = true ;
+    }
+    else if ( step.action == Step.REMOVE)
+    {
+        userAnswers[step.row][step.column] = step.digit ;
+        tiles[step.digit-1].enabled = false ;
+        tiles[step.digit-1].selected = false ;
+    }
+
+ //    console.log(`[${step.row}, ${step.column}]`) ;
+    updateBoard() ;
+    updateTiles() ;
 }

@@ -6,6 +6,10 @@
         <script lang="javascript" src="puzzler.js"></script>
         <script lang="javascript">
             $(document).ready( function() {
+                $("#undo").click(function() { 
+                    undoStep() ;
+                }) ;
+
                 $("#answer").click(function() { 
                     toggleAnswer() ;
                 }) ;
@@ -31,6 +35,7 @@
             <thead class="heading">
                 <th class="boardTitle">Board</th>
                 <th class="tilesTitle">Tiles</th>
+                <th class="steps">Steps</th>
             </thead>
             <tbody>
                 <tr>
@@ -63,6 +68,11 @@
                             <div id="TC3" class="tile"></div>
                         </div>            
                     </td>
+                    <td rowspan="2">
+                        <div id="stepsDiv" class="steps">
+                            <textarea id="steps" readonly="true" cols="15" rows="40"  style="font-size: 10px;"></textarea>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td style="padding:20px 50px">
@@ -78,6 +88,8 @@
                         <input type="button" id="timer" value="00:00:00" class="button timer" />
                         <br /><br />
                         <input type="button" id="answer" value="Show Answer" class="button check" />
+                        <br /><br />
+                        <input type="button" id="undo" value="UNDO" class="button undo" />
                         <br /><br />
                         <input type="button" id="checkAnswer" value="Check Answer" class="button check" />
                         <br /><br />
