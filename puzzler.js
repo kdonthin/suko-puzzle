@@ -484,8 +484,6 @@ function markColorTotalField(color)
         }
     }
 
-    // console.log( `color: ${color}, isColorComplete: ${isColorComplete}, userTotal: ${userTotal}`) ;
-
     if ( isColorComplete )
     {
         if ( board[3][color-1].text() == userTotal)
@@ -555,13 +553,20 @@ function checkAnswer(autoCheck)
         if ( isCorrect )
         {
             clearInterval(timerId) ;
-            alert(`Congratulations, you completed puzzle in [${secondsToTimeString(timePastSec)}] !!!!`) ;
+
+            setTimeout(function() {
+                    alert(`Congratulations, you completed puzzle in [${secondsToTimeString(timePastSec)}] !!!!`) ;
+                 }, 500) ;
+            
             logToPage(`Checking - Congratulations, you completed puzzle in [${secondsToTimeString(timePastSec)}]`) ;
             isPuzzleCorrect = true ;
         }
         else if (markTotalFields())
         {
-            alert(`Congratulations, You found alternative Solution in [${secondsToTimeString(timePastSec)}] !!!!`) ;
+            setTimeout(function() {
+                alert(`Congratulations, You found alternative Solution in [${secondsToTimeString(timePastSec)}] !!!!`) ;
+             }, 500) ;
+        
             logToPage(`Checking - Congratulations. You have found alternative solution in [${secondsToTimeString(timePastSec)}] !!!!.`) ;
             isCorrect = true ;
         }
@@ -707,8 +712,6 @@ function undoStep()
 
     step = steps.pop() ;
 
-//    console.log(step.toString()) ;
-
     if ( step.action == ADD)
     {
         clearTileSelection() ;
@@ -723,7 +726,6 @@ function undoStep()
         tiles[step.digit-1].selected = false ;
     }
 
- //    console.log(`[${step.row}, ${step.column}]`) ;
     updateBoard() ;
     updateTiles() ;
 }
