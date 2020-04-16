@@ -190,6 +190,8 @@ function setBoard()
     colorDeck.reset() ;
     setBoardColor(positionDeck.pop(), colorDeck.pop()) ;
 
+    boardColors = rotateBoardColors(boardColors) ;
+
     for (let row = 0; row < 3; ++row)
     {
         for (let col = 0; col < 3; ++col)
@@ -235,6 +237,38 @@ function setBoard()
     timerId = setInterval(updateTimer, 1000) ;
     timerStartTime = new Date() ;
     isPuzzleCorrect = false ;    
+}
+
+function rotateBoardColors(boardColors)
+{
+    let randomDeck = new Deck(4) ;
+
+    randomDeck.shuffle() ;
+
+    let rotationCount = randomDeck.pop() ;
+
+
+    for( let i = 0; i <= rotationCount; ++i)
+    {
+        boardColors = rotateBoardColorsOnce(boardColors) ;
+    }
+
+    return boardColors ;
+}
+
+function rotateBoardColorsOnce(boardColors)
+{
+    let newBoardColors = [[0,0,0], [0,0,0], [0,0,0]] ;
+
+    for (let row = 0; row < 3; ++row)
+    {
+        for (let col = 0; col < 3; ++col)
+        {
+            newBoardColors[col][2-row] = boardColors[row][col] ;
+        }
+    }
+
+    return newBoardColors ;
 }
 
 function updateTimer()
