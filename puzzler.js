@@ -159,8 +159,6 @@ function createSolution()
 
 function setBoard()
 {
-    // logToPage("Setting up board.") ;
-
     createSolution() ;
 
     board[0].push($("#A1"))
@@ -226,6 +224,7 @@ function setBoard()
     // initialize tiles
     initializeTiles() ;
 
+    steps.clear() ;
     updateBoard() ;
     updateTiles() ;
 
@@ -235,9 +234,7 @@ function setBoard()
 
     timerId = setInterval(updateTimer, 1000) ;
     timerStartTime = new Date() ;
-    isPuzzleCorrect = false ;
-    
-    steps.clear() ;
+    isPuzzleCorrect = false ;    
 }
 
 function updateTimer()
