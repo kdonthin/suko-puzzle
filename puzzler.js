@@ -139,6 +139,7 @@ var timerId ;
 var timerStartTime ;
 var timePastSec ;
 var isPuzzleCorrect ;
+var colorPatternNo = 1 ;
 
 const GAME_INTRO = "\nINSTRUCTIONS:\nPlace the numbers 1-9 in the spaces so that the number in each circle is equal to the sum of the four surrounding spaces and each color total is correct.\nClick on tile to select and click on box(Board) to place it.\nInspired by WSJ Suko Number Puzzle." ;
 
@@ -196,7 +197,7 @@ function setBoard()
     {
         for (let col = 0; col < 3; ++col)
         {
-            board[row][col].addClass(`cat${boardColors[row][col]}`) ;
+            board[row][col].addClass(`colorPattern${colorPatternNo}-${boardColors[row][col]}`) ;
             board[row][col].click(function() {
                 boardClicked(row, col) ;
             })
@@ -205,7 +206,7 @@ function setBoard()
 
     for (let col = 0; col < 3; ++col)
     {
-        board[3][col].addClass(`cat${col+1}`) ;
+        board[3][col].addClass(`colorPattern${colorPatternNo}-${col+1}`) ;
         board[3][col].text(solution[0][col]+solution[1][col]+solution[2][col]) ;
 
         board[3][col].text(calculateSumForColor(col+1)) ;
@@ -706,7 +707,7 @@ function newPuzzle(ask)
  
     TILES.unbind("click") ;
     $("#board > div").unbind("click") ;
-    $("#board > div").removeClass("cat1").removeClass("cat2").removeClass("cat3") ;
+    $("#board > div").removeClass(`colorPattern${colorPatternNo}-1`).removeClass(`colorPattern${colorPatternNo}-2`).removeClass(`colorPattern${colorPatternNo}-3`) ;
 
     setBoard() ;
 }

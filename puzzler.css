@@ -33,17 +33,17 @@ body {
   text-align: center;
 }
 
-.cat1 {
+.colorPattern1-1 {
   background-color: #ccc;
   color: #000;
 }
   
-.cat2 {
+.colorPattern1-2 {
   background-color: orange;
   color: #000;
 }
   
-.cat3 {
+.colorPattern1-3 {
   background-color: rgb(46, 194, 90);
   color: #000;
 }
