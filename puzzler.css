@@ -34,16 +34,76 @@ body {
 }
 
 .colorPattern1-1 {
-  background-color: #ccc;
+  background-color: #69c;
   color: #000;
 }
   
 .colorPattern1-2 {
-  background-color: orange;
+  background-color: #cfbe1d;
   color: #000;
 }
   
 .colorPattern1-3 {
+  background-color: #ff8c42;
+  color: #000;
+}
+
+.colorPattern2-1 {
+  background-color: #e5dcc5;
+  color: #000;
+}
+  
+.colorPattern2-2 {
+  background-color: #848fa5;
+  color: #000;
+}
+  
+.colorPattern2-3 {
+  background-color: #c14953;
+  color: #000;
+}
+
+.colorPattern3-1 {
+  background-color: #5bc0eb;
+  color: #000;
+}
+  
+.colorPattern3-2 {
+  background-color: #9bc53d;
+  color: #000;
+}
+  
+.colorPattern3-3 {
+  background-color: #fa7921;
+  color: #000;
+}
+
+.colorPattern4-1 {
+  background-color: #1a936f;
+  color: #000;
+}
+  
+.colorPattern4-2 {
+  background-color: #88d498;
+  color: #000;
+}
+  
+.colorPattern4-3 {
+  background-color: #f2c660;
+  color: #000;
+}
+
+.colorPattern5-1 {
+  background-color: #ccc;
+  color: #000;
+}
+  
+.colorPattern5-2 {
+  background-color: orange;
+  color: #000;
+}
+  
+.colorPattern5-3 {
   background-color: rgb(46, 194, 90);
   color: #000;
 }

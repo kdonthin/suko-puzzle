@@ -139,7 +139,7 @@ var timerId ;
 var timerStartTime ;
 var timePastSec ;
 var isPuzzleCorrect ;
-var colorPatternNo = 1 ;
+var colorPatternNo = 4 ;
 
 const GAME_INTRO = "\nINSTRUCTIONS:\nPlace the numbers 1-9 in the spaces so that the number in each circle is equal to the sum of the four surrounding spaces and each color total is correct.\nClick on tile to select and click on box(Board) to place it.\nInspired by WSJ Suko Number Puzzle." ;
 
@@ -192,6 +192,10 @@ function setBoard()
     setBoardColor(positionDeck.pop(), colorDeck.pop()) ;
 
     boardColors = rotateBoardColors(boardColors) ;
+
+    var colorPatternDeck = new Deck(5) ;
+    colorPatternDeck.shuffle() ;
+    colorPatternNo = colorPatternDeck.pop() ;
 
     for (let row = 0; row < 3; ++row)
     {
