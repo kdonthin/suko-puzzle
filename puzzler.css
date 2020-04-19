@@ -239,6 +239,8 @@ body {
   background-color: purple;
 }
 
+.show {background-color: #008CBA;} /* Blue */
+
 .check {
   background-color: #4CAF50; /* Green */
 }
